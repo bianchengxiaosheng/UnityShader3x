@@ -1,2 +1,13 @@
 Client/Library
 Client/Temp
+Client/obj
+Client/Assembly-CSharp.csproj
+Client/Assembly-CSharp.pidb
+Client/Assembly-CSharp-vs.csproj
+Client/Client.sln
+Client/Client.userprefs
+Client/Client-csharp.sln
+Client/UnityVS.Client.CSharp.csproj
+Client/UnityVS.Client.sln
+Client/UnityVS.Client.v12.suo
+Client/Assets/UnityVS
