@@ -48,10 +48,11 @@ Shader "GWL/LightingBasicDiffuseGeneratedCodeDelete"
 
     		struct Input 
     		{
-    			float2 uv_MainTex;
+    			//float2 uv_MainTex;
+    			float2 uv;
     		};
 
-    		void surf (Input IN, inout SurfaceOutput o) 
+    		void surf (inout SurfaceOutput o) 
     		{
     			float4 c;
     			c =  pow((_EmissiveColor + _AmbientColor), _MySliderValue);
@@ -91,9 +92,9 @@ Shader "GWL/LightingBasicDiffuseGeneratedCodeDelete"
       o.Alpha = 0.0;
       o.Gloss = 0.0;
       o.Normal = IN.normal;
-
+      float2 v;
       // call surface function
-      surf (surfIN, o);
+      surf (o);
 
       // compute lighting & shadowing factor
       fixed atten = LIGHT_ATTENUATION(IN);
