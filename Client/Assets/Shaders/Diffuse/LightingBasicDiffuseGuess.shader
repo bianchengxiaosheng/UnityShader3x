@@ -38,6 +38,7 @@ Shader "GWL/LightingBasicDiffuseGuess" {
           float4 pos:SV_POSITION;
           fixed3 worldN:TEXCOORD0;
           fixed3 vertexLight:TEXCOORD1;
+          float3 worldlightDir:TEXCOORD2;
         };
 
       Output vert(Input v)
@@ -46,6 +47,7 @@ Shader "GWL/LightingBasicDiffuseGuess" {
         o.pos = mul(UNITY_MATRIX_MVP,v.vertex);
         o.worldN = mul((float3x3)_Object2World,SCALED_NORMAL);
         o.vertexLight = ShadeSH9(float4(o.worldN,1.0));
+        o.worldlightDir = WorldSpaceLightDir(v.vertex );
         return o;
       }
 
@@ -55,7 +57,7 @@ Shader "GWL/LightingBasicDiffuseGuess" {
         fixed4   col = pow((_EmissiveColor + _AmbientColor),_MySliderValue);
         fixed atten = 1;//LIGHT_ATTENUATION(i);
         fixed4 Col2;
-        Col2 =  LightingBasicDiffuse(col.rgb,i.worldN,_WorldSpaceLightPos0.xyz,1);
+        Col2 =  LightingBasicDiffuse(col.rgb,i.worldN,i.worldlightDir,1);
         Col2.rbg += col.rgb * i.vertexLight;
         return Col2;
       }
