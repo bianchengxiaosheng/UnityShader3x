@@ -1,4 +1,4 @@
-Shader "GWL/LightingBasicDiffuseGuess" {
+Shader "GWL/HalfLambertDiffuseGuess" {
   Properties {
     _EmissiveColor ("Emissive Color", Color) = (1,1,1,1)
     _AmbientColor  ("Ambient Color", Color) = (1,1,1,1)
@@ -21,10 +21,11 @@ Shader "GWL/LightingBasicDiffuseGuess" {
         //基本漫反射模型
         inline float4 LightingBasicDiffuse (fixed3 rbg,fixed3 normal, fixed3 lightDir, fixed atten)
         {
-          fixed  difLight = max(0, dot (normal, lightDir));
+          fixed  difLight = dot (normal, lightDir);
+          fixed hLambert = difLight * 0.5 + 0.5; 
           
           fixed4  col;
-          col.rgb = rbg * _LightColor0.rgb * (difLight * atten * 2);
+          col.rgb = rbg * _LightColor0.rgb * (hLambert * atten * 2);
           col.a = 1;
           return col;
         }
@@ -50,7 +51,6 @@ Shader "GWL/LightingBasicDiffuseGuess" {
         o.vertexLight = ShadeSH9(float4(o.worldN,1.0));
         o.worldlightDir = WorldSpaceLightDir(v.vertex );
         o.worldPos = mul(_Object2World,v.vertex);
-
         return o;
       }
 
@@ -73,7 +73,7 @@ Shader "GWL/LightingBasicDiffuseGuess" {
           atten = 1.0 /distance;//线性的光照强度
           lightDirection = normalize(vertexToLightSource);
         }
-        Col2 =  LightingBasicDiffuse(col.rgb,i.worldN,lightDirection,1);
+        Col2 =  LightingBasicDiffuse(col.rgb,i.worldN,lightDirection,atten);
         Col2.rbg += col.rgb * i.vertexLight;
         return Col2;
       }
