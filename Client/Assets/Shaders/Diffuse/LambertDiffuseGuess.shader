@@ -1,4 +1,4 @@
-Shader "GWL/LightingBasicDiffuseGuess" {
+Shader "GWL/LambertDiffuseGuess" {
   Properties {
     _EmissiveColor ("Emissive Color", Color) = (1,1,1,1)
     _AmbientColor  ("Ambient Color", Color) = (1,1,1,1)

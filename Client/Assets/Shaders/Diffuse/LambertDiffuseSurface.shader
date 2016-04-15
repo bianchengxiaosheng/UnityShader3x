@@ -1,4 +1,4 @@
-Shader "GWL/LightingBasicDiffuseGeneratedCode" 
+Shader "GWL/LambertDiffuseSurface" 
 {
 	Properties 	
 	{

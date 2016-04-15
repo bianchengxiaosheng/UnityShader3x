@@ -1,4 +1,4 @@
-Shader "CookbookShaders/BasicDiffuseTest2" 
+Shader "GWL/LambertDiffuseGenerated" 
 {
 	Properties 	
 	{

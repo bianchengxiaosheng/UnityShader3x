@@ -1,4 +1,4 @@
-Shader "GWL/LightingBasicDiffuseGeneratedCodeDelete" 
+Shader "GWL/LambertDiffuseGeneratedCodeDelete" 
 {
 	Properties 	
 	{
