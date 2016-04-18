@@ -1,8 +1,9 @@
-Shader "GWL/HalfLambertDiffuseGuess" {//Half Lambert最初是由Valve（游戏半条命2使用的引擎即是其开发的）提出来，用于提高物体在一些光线无法照射到的区域的亮度的。简单说来，它提高了漫反射光照的亮度，使得漫反射光线可以看起来照射到一个物体的各个表面
+Shader "GWL/HalfLambertDiffuseGuess" {// 可以在很多卡通风格的游戏中看到这种技术
   Properties {
     _EmissiveColor ("Emissive Color", Color) = (1,1,1,1)
     _AmbientColor  ("Ambient Color", Color) = (1,1,1,1)
     _MySliderValue ("This is a Slider", Range(0,10)) = 2.5
+    _RampTex ("Ramp Texture", 2D) = "white"{}
   }
   SubShader {
     Tags { "RenderType"="Opaque" }
@@ -18,14 +19,15 @@ Shader "GWL/HalfLambertDiffuseGuess" {//Half Lambert最初是由Valve（游戏�
         float4 _EmissiveColor;
         float4 _AmbientColor;
         float _MySliderValue;
+        sampler2D _RampTex;
         //基本漫反射模型
         inline float4 LightingBasicDiffuse (fixed3 rbg,fixed3 normal, fixed3 lightDir, fixed atten)
         {
           fixed  difLight = dot (normal, lightDir);
           fixed hLambert = difLight * 0.5 + 0.5; 
-          
+          float3 ramp = tex2D(_RampTex, float2(hLambert)).rgb;
           fixed4  col;
-          col.rgb = rbg * _LightColor0.rgb * (hLambert * atten * 2);
+          col.rgb = rbg * _LightColor0.rgb * ramp;
           col.a = 1;
           return col;
         }
